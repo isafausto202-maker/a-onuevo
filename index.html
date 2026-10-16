@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b12">
+  <meta name="description" content="Una noche para recordar. Bienvenido, 2027.">
+  <title>Bienvenido, 2027 — Una noche para recordar</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f7f1e5;
+      --muted: #b8b2a5;
+      --gold: #e8c77b;
+      --line: rgb(232 199 123 / 28%);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { min-width: 320px; min-height: 100%; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 50% 72%, rgb(54 39 54 / 38%), transparent 44%),
+        radial-gradient(ellipse at 50% 100%, #17151c 0, #0b0d14 48%, #080b12 100%);
+      color: var(--ink);
+      font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image: radial-gradient(#fff 0.7px, transparent 0.9px);
+      background-size: 73px 73px;
+      content: "";
+      opacity: 0.19;
+      pointer-events: none;
+      mask-image: linear-gradient(180deg, #000 0%, transparent 88%);
+    }
+
+    #fireworks {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      min-height: 100svh;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+      text-align: center;
+    }
+
+    .welcome {
+      width: min(100%, 760px);
+      animation: arrive 1.3s cubic-bezier(.2, .7, .2, 1) both;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 13px;
+      margin: 0 0 27px;
+      color: var(--gold);
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before,
+    .eyebrow::after {
+      width: 30px;
+      height: 1px;
+      background: var(--line);
+      content: "";
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(88px, 21vw, 204px);
+      font-weight: 400;
+      letter-spacing: -0.085em;
+      line-height: 0.82;
+      text-indent: -0.085em;
+      background: linear-gradient(150deg, #fff9e9 8%, #eed9a6 42%, #c49a54 78%, #f6e7c6);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 44px rgb(228 184 103 / 14%));
+    }
+
+    .headline {
+      margin: 31px 0 12px;
+      font-size: clamp(25px, 5vw, 39px);
+      font-weight: 400;
+      letter-spacing: 0.035em;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.035em;
+      line-height: 1.8;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 30px auto 21px;
+      color: var(--gold);
+    }
+
+    .divider::before,
+    .divider::after {
+      width: 51px;
+      height: 1px;
+      background: var(--line);
+      content: "";
+    }
+
+    .divider span { font-size: 11px; }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: clamp(19px, 5vw, 43px);
+      margin-bottom: 31px;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    .unit { display: grid; gap: 5px; }
+
+    .unit strong {
+      color: #f1dfb7;
+      font-size: 22px;
+      font-weight: 300;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.06em;
+    }
+
+    .unit span {
+      color: #8f8a81;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .celebrate {
+      min-height: 48px;
+      padding: 0 25px;
+      border: 1px solid rgb(232 199 123 / 52%);
+      border-radius: 2px;
+      background: rgb(232 199 123 / 7%);
+      color: #f3dfb1;
+      cursor: pointer;
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.19em;
+      text-transform: uppercase;
+      transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+
+    .celebrate:hover {
+      transform: translateY(-2px);
+      border-color: var(--gold);
+      background: rgb(232 199 123 / 14%);
+    }
+
+    .celebrate:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 4px;
+    }
+
+    .signature {
+      position: absolute;
+      right: 22px;
+      bottom: 20px;
+      left: 22px;
+      color: #77736e;
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    @keyframes arrive {
+      from { transform: translateY(18px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media (max-height: 680px) {
+      main { padding-top: 28px; padding-bottom: 42px; }
+      .eyebrow { margin-bottom: 19px; }
+      h1 { font-size: clamp(76px, 19vh, 146px); }
+      .headline { margin-top: 22px; }
+      .divider { margin-top: 20px; }
+      .countdown { margin-bottom: 23px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="fireworks" aria-hidden="true"></canvas>
+  <main>
+    <section class="welcome" aria-labelledby="year">
+      <p class="eyebrow">Una noche para recordar</p>
+      <h1 id="year">2027</h1>
+      <h2 class="headline">Feliz año nuevo</h2>
+      <p class="subtitle">Que cada comienzo traiga algo extraordinario.<br>Esta noche, el cielo es solo el principio.</p>
+      <div class="divider" aria-hidden="true"><span>✳</span></div>
+      <div class="countdown" aria-label="Cuenta regresiva para el año nuevo">
+        <div class="unit"><strong id="days">000</strong><span>Días</span></div>
+        <div class="unit"><strong id="hours">00</strong><span>Horas</span></div>
+        <div class="unit"><strong id="minutes">00</strong><span>Minutos</span></div>
+        <div class="unit"><strong id="seconds">00</strong><span>Segundos</span></div>
+      </div>
+      <button class="celebrate" id="celebrate" type="button">Encender la noche</button>
+    </section>
+    <footer class="signature">Un nuevo año · infinitas posibilidades</footer>
+  </main>
+  <script>
+    const canvas = document.querySelector("#fireworks");
+    const context = canvas.getContext("2d");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const particles = [];
+    const colors = ["#f7d58a", "#f6a77b", "#d9c4f2", "#a9d9d1", "#fff0c2"];
+    let width = 0;
+    let height = 0;
+    let pixelRatio = 1;
+    let lastLaunch = 0;
+
+    function resizeCanvas() {
+      pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.round(width * pixelRatio);
+      canvas.height = Math.round(height * pixelRatio);
+      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    }
+
+    function burst(x, y, color = colors[Math.floor(Math.random() * colors.length)]) {
+      const count = 55 + Math.floor(Math.random() * 35);
+      for (let i = 0; i < count; i += 1) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 1 + Math.random() * 4.3;
+        particles.push({
+          x,
+          y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 55 + Math.random() * 38,
+          maxLife: 93,
+          size: 1 + Math.random() * 1.8,
+          color
+        });
+      }
+    }
+
+    function launch() {
+      const x = width * (0.13 + Math.random() * 0.74);
+      const y = height * (0.13 + Math.random() * 0.43);
+      burst(x, y);
+    }
+
+    function animate(time) {
+      context.clearRect(0, 0, width, height);
+
+      if (!reducedMotion.matches && time - lastLaunch > 1450 + Math.random() * 1600) {
+        launch();
+        lastLaunch = time;
+      }
+
+      for (let i = particles.length - 1; i >= 0; i -= 1) {
+        const particle = particles[i];
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+        particle.vy += 0.025;
+        particle.vx *= 0.99;
+        particle.life -= 1;
+
+        if (particle.life <= 0) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        context.globalAlpha = Math.min(1, particle.life / 22);
+        context.fillStyle = particle.color;
+        context.beginPath();
+        context.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        context.fill();
+      }
+
+      context.globalAlpha = 1;
+      window.requestAnimationFrame(animate);
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const newYear = new Date(2027, 0, 1);
+      const remaining = Math.max(0, newYear.getTime() - now.getTime());
+      const totalSeconds = Math.floor(remaining / 1000);
+      document.querySelector("#days").textContent = String(Math.floor(totalSeconds / 86400)).padStart(3, "0");
+      document.querySelector("#hours").textContent = String(Math.floor(totalSeconds / 3600) % 24).padStart(2, "0");
+      document.querySelector("#minutes").textContent = String(Math.floor(totalSeconds / 60) % 60).padStart(2, "0");
+      document.querySelector("#seconds").textContent = String(totalSeconds % 60).padStart(2, "0");
+    }
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+    document.querySelector("#celebrate").addEventListener("click", () => {
+      burst(width * (0.25 + Math.random() * 0.5), height * (0.17 + Math.random() * 0.36));
+      if (navigator.vibrate) navigator.vibrate(35);
+    });
+    updateCountdown();
+    window.setInterval(updateCountdown, 1000);
+    window.requestAnimationFrame(animate);
+  </script>
+</body>
+</html>
